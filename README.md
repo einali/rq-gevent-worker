@@ -3,7 +3,7 @@ rq-gevent-worker
 
 Implement a new worker based on gevent for Python 3  and  rq 0.7.1 and gevent 1.2.1 
 
-(https://pypi.python.org/pypi/rq-gevent-worker/)
+https://pypi.python.org/pypi/rq-gevent-worker/
 
 
 ##Usage
