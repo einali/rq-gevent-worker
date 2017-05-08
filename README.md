@@ -11,15 +11,13 @@ Implement a new worker based on gevent
 
 ##Usage
 
-    $ rqgeventworker -h
 
-    $ export PYTHONPATH=<your project import path>:$PYTHONPATH; rqgeventworker
 
 ##Test
 
-    $ pip install -r requirements.txt
-
-    $ py.test tests
+    tested with rq==0.7.1
+	 Gevent 1.2.7
+	
 
 ##Under The Hood
 TODO
@@ -38,9 +36,26 @@ When using gevent, we use the same process to execute job, the job may
 cause the whole worker process crash.
 
 ###Why not `rqworker -w <geventworker>`
-Because we need gevent monkey patch at the start of the process, rqworker import
-many modules before importing geventworker, so it will cause geventworker not work normally.
+update rqworker script at bin directory and 
+
+# -*- coding: utf-8 -*-
+import re
+import sys
+from gevent import monkey, get_hub
+from gevent.hub import LoopExit
+monkey.patch_all()
+
+from rq.cli import worker
+
+if __name__ == '__main__':
+    sys.argv[0] = re.sub(r'(-script\.pyw?|\.exe)?$', '', sys.argv[0])
+    sys.exit(worker())# default greenlet pool_size is 20
+    #sys.exit(worker(pool_size=20))	
+
+
+
+
 
 ##Declaration
 
-Most of the code is from [lechup](https://gist.github.com/lechup/d886e89490b2f6c737d7) and [jhorman](https://gist.github.com/jhorman/e16ed695845fca683057), 
+Most of the code is from [zhangliyong](https://github.com/zhangliyong/rq-gevent-worker) 
