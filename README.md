@@ -15,8 +15,11 @@ Implement a new worker based on gevent
 
 ##Test
 
-    tested with rq==0.7.1
-	 Gevent 1.2.7
+    Tested with 
+	1. rq==0.7.1
+	2. Gevent 1.2.7
+	3. python 3.5.2
+
 	
 
 ##Under The Hood
@@ -35,26 +38,41 @@ so if the job cause the process crash, the worker process is still alive.
 When using gevent, we use the same process to execute job, the job may
 cause the whole worker process crash.
 
-###Why not `rqworker -w <geventworker>`
-update rqworker script at bin directory and 
+### How to use
+
+put rq_gevent_worker.py in site-packages/rq/cli
+
+then 
+vim  your_venv/bin/rqworkr
+
+to this 
+
+```python
+
+#!/home/mehdi/venvs/test_rq/bin/python
 
 # -*- coding: utf-8 -*-
 import re
 import sys
 from gevent import monkey, get_hub
 from gevent.hub import LoopExit
-monkey.patch_all()
 
 from rq.cli import worker
+from rq.cli.rq_gevent_worker import GeventWorker
+from rq import Connection, Queue, Worker
 
+
+monkey.patch_all()
 if __name__ == '__main__':
-    sys.argv[0] = re.sub(r'(-script\.pyw?|\.exe)?$', '', sys.argv[0])
-    sys.exit(worker())# default greenlet pool_size is 20
-    #sys.exit(worker(pool_size=20))	
+    with Connection():
+        q = Queue()
+        GeventWorker(q).work()
+#   sys.argv[0] = re.sub(r'(-script\.pyw?|\.exe)?$', '', sys.argv[0])
+ #  sys.exit(GeventWorker())
 
 
 
-
+```
 
 ##Declaration
 
