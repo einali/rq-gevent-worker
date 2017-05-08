@@ -4,7 +4,7 @@ from __future__ import (absolute_import, division, print_function,
 
 from gevent import monkey, get_hub
 from gevent.hub import LoopExit
-monkey.patch_all()
+# monkey.patch_all()
 
 import signal
 import gevent
