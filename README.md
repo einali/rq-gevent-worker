@@ -1,44 +1,12 @@
 rq-gevent-worker
 ================
 
-Implement a new worker based on gevent
+Implement a new worker based on gevent for Python 3  and  rq 0.7.1 and gevent 1.2.1 
 
-[![Downloads](https://pypip.in/download/rq-gevent-worker/badge.svg)](https://pypi.python.org/pypi/rq-gevent-worker/)
+(https://pypi.python.org/pypi/rq-gevent-worker/)
 
-##Install
-
-    $ pip install rq-gevent-worker
 
 ##Usage
-
-
-
-##Test
-
-    Tested with 
-	1. rq==0.7.1
-	2. Gevent 1.2.7
-	3. python 3.5.2
-
-	
-
-##Under The Hood
-TODO
-
-##TODO
-
-* Add a command line option to specify gevent pool size
-
-##Note
-
-###Crash
-Official `Worker` use `os.fork()` to spawn a child process to execute a job,
-so if the job cause the process crash, the worker process is still alive.
-
-When using gevent, we use the same process to execute job, the job may
-cause the whole worker process crash.
-
-### How to use
 
 put rq_gevent_worker.py in site-packages/rq/cli
 
@@ -73,6 +41,25 @@ if __name__ == '__main__':
 
 
 ```
+
+
+##Test
+
+    Tested with 
+	1. rq==0.7.1
+	2. Gevent 1.2.7
+	3. python 3.5.2
+
+	
+
+##Under The Hood
+TODO
+
+##TODO
+
+* Add a command line option to specify gevent pool size
+
+
 
 ##Declaration
 
